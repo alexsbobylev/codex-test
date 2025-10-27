@@ -224,5 +224,7 @@ def inject_helpers():
 
 
 if __name__ == "__main__":
-    start_scheduler()
-    app.run(debug=True)
+    debug_mode = True
+    if not debug_mode or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+        start_scheduler()
+    app.run(debug=debug_mode)
