@@ -28,6 +28,22 @@ npm run dev
 
 Фронтенд по умолчанию обращается к API `http://localhost:5000/api`. При необходимости задайте `VITE_API_URL` в `.env` фронтенда.
 
+### Просмотр production-сборки
+
+Чтобы открыть приложение в браузере без двух отдельных процессов, соберите фронтенд и запустите backend:
+
+```bash
+cd frontend
+npm install
+npm run build
+
+cd ../backend
+npm install
+npm start
+```
+
+Express автоматически раздаст файлы из `frontend/dist`, и приложение будет доступно на `http://localhost:5000`.
+
 ## Возможности
 
 - CRUD для подписок с хранением в SQLite
