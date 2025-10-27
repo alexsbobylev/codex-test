@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% if subscription %}
+  {% set page_title = 'Редактирование' %}
+{% else %}
+  {% set page_title = 'Новая подписка' %}
+{% endif %}
+
+{% block title %}{{ page_title }} — NeuroSubs{% endblock %}
+
+{% block content %}
+<section class="form-card">
+  <h1>{{ page_title }}</h1>
+  <form method="post" class="subscription-form">
+    <div class="form-grid">
+      <label>
+        <span>Название сервиса *</span>
+        <input type="text" name="name" value="{{ subscription.name if subscription else '' }}" required>
+      </label>
+      <label>
+        <span>Стоимость *</span>
+        <input type="number" step="0.01" min="0" name="cost" value="{{ subscription.cost if subscription else '' }}" required>
+      </label>
+      <label>
+        <span>Биллинг *</span>
+        <input type="text" name="billing_cycle" placeholder="Ежемесячно, ежегодно..." value="{{ subscription.billing_cycle if subscription else '' }}" required>
+      </label>
+      <label>
+        <span>Следующий платёж *</span>
+        <input type="date" name="next_payment_date" value="{{ subscription.next_payment_date.strftime('%Y-%m-%d') if subscription else '' }}" required>
+      </label>
+      <label>
+        <span>Напомнить за (дней)</span>
+        <input type="number" name="notify_days_before" min="0" value="{{ subscription.notify_days_before if subscription else 3 }}">
+      </label>
+      <label>
+        <span>E-mail для уведомлений *</span>
+        <input type="email" name="contact_email" value="{{ subscription.contact_email if subscription else '' }}" required>
+      </label>
+    </div>
+    <label class="full">
+      <span>Заметки</span>
+      <textarea name="notes" rows="4" placeholder="Например, промокоды или условия тарифа">{{ subscription.notes if subscription else '' }}</textarea>
+    </label>
+    <div class="form-actions">
+      <a class="button ghost" href="{{ url_for('index') }}">Назад</a>
+      <button class="button primary" type="submit">Сохранить</button>
+    </div>
+  </form>
+</section>
+{% endblock %}
